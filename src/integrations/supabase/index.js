@@ -1,4 +1,3 @@
-```javascript
 import { createClient } from '@supabase/supabase-js';
 import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -174,4 +173,6 @@ export const useDeleteEvent = () => {
             queryClient.invalidateQueries('events');
         },
     });
-```
+};
+
+export { supabase, SupabaseProvider, queryClient };

@@ -4,6 +4,7 @@ import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Profiles from "./pages/Profiles.jsx";
 import Categories from "./pages/Categories.jsx";
+import Category from "./pages/Category.jsx";
 import Navbar from "./components/Navbar.jsx";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/contact" element={<Contact />} />
         <Route exact path="/profiles" element={<Profiles />} />
         <Route exact path="/categories" element={<Categories />} />
+        <Route exact path="/categories/:category" element={<Category />} />
       </Routes>
     </Router>
   );

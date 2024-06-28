@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Star } from 'lucide-react';
 
 const Services = () => {
   const { data: services, isLoading, error } = useServices();
@@ -14,6 +17,8 @@ const Services = () => {
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('');
   const [editingServiceId, setEditingServiceId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('');
 
   const addService = useAddService();
   const updateService = useUpdateService();
@@ -54,6 +59,11 @@ const Services = () => {
     }
   };
 
+  const filteredServices = services?.filter(service => 
+    service.description.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (filterCategory ? service.category === filterCategory : true)
+  );
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Services</h1>
@@ -73,14 +83,56 @@ const Services = () => {
         <Button type="submit">{editingServiceId ? 'Update Service' : 'Add Service'}</Button>
       </form>
       <h2 className="text-xl font-bold mb-4">All Services</h2>
-      {services?.map((service, index) => (
-        <div key={index} className="mb-4 p-4 border rounded">
-          <h2 className="text-xl font-bold">{service.description}</h2>
-          <p>Price: {service.price}</p>
-          <p>Category: {service.category}</p>
-          <Button onClick={() => handleEdit(service)}>Edit</Button>
-          <Button onClick={() => handleDelete(service.id)}>Delete</Button>
-        </div>
+      <div className="flex space-x-4 mb-4">
+        <Input 
+          placeholder="Search services..." 
+          value={searchTerm} 
+          onChange={(e) => setSearchTerm(e.target.value)} 
+        />
+        <Select onValueChange={setFilterCategory}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filter by category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="">All Categories</SelectItem>
+            {Array.from(new Set(services?.map(service => service.category))).map((category, index) => (
+              <SelectItem key={index} value={category}>{category}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      {filteredServices?.map((service, index) => (
+        <Card key={index} className="mb-4">
+          <CardHeader>
+            <CardTitle>{service.description}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>Price: {service.price}</p>
+            <p>Category: {service.category}</p>
+            <div className="flex items-center">
+              <Star className="text-yellow-500" />
+              <span className="ml-2">{service.rating || 'No ratings yet'}</span>
+            </div>
+            <div>
+              <h3 className="font-bold">Reviews:</h3>
+              {service.reviews?.length > 0 ? (
+                service.reviews.map((review, idx) => (
+                  <div key={idx} className="mb-2 p-2 border rounded">
+                    <p>{review.comment}</p>
+                    <div className="flex items-center">
+                      <Star className="text-yellow-500" />
+                      <span className="ml-2">{review.rating}</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No reviews yet.</p>
+              )}
+            </div>
+            <Button onClick={() => handleEdit(service)}>Edit</Button>
+            <Button onClick={() => handleDelete(service.id)}>Delete</Button>
+          </CardContent>
+        </Card>
       ))}
     </div>
   );

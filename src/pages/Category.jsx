@@ -18,7 +18,7 @@ const Category = () => {
     },
   ]);
 
-  const filteredServices = services.filter(service => service.category.toLowerCase().replace(/ /g, "-") === category);
+  const filteredServices = services?.filter(service => service.category.toLowerCase().replace(/ /g, "-") === category);
 
   return (
     <div className="container mx-auto p-4">

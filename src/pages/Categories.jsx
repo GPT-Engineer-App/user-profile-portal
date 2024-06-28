@@ -8,7 +8,7 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    if (profiles) {
+    if (profiles && Array.isArray(profiles)) {
       const skillSet = new Set();
       profiles.forEach(profile => {
         profile.skills.forEach(skill => skillSet.add(skill));

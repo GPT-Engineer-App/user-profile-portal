@@ -175,4 +175,3 @@ export const useDeleteEvent = () => {
     });
 };
 
-export { supabase, SupabaseProvider, queryClient };

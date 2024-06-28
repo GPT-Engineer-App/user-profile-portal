@@ -1,5 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Index from "./pages/Index.jsx";
+import Services from "./pages/Services.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Profiles from "./pages/Profiles.jsx";
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/profiles" element={<ProtectedRoute><Profiles /></ProtectedRoute>} />
         <Route exact path="/categories" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
         <Route exact path="/categories/:category" element={<ProtectedRoute><Category /></ProtectedRoute>} />
+        <Route exact path="/services" element={<ProtectedRoute><Services /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Calendar } from '@/components/ui/calendar';
@@ -8,8 +8,24 @@ const BookingWizard = ({ onClose }) => {
   const [step, setStep] = useState(1);
   const [selectedService, setSelectedService] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [selectedSlot, setSelectedSlot] = useState(null);
   const [contactInfo, setContactInfo] = useState({ name: '', email: '', phone: '' });
   const { data: services } = useServices();
+
+  useEffect(() => {
+    if (selectedDate) {
+      // Fetch available slots for the selected date from an API or predefined list
+      // For demonstration, using a predefined list
+      const slots = [
+        '10:00 AM - 11:00 AM',
+        '11:00 AM - 12:00 PM',
+        '01:00 PM - 02:00 PM',
+        '02:00 PM - 03:00 PM',
+      ];
+      setAvailableSlots(slots);
+    }
+  }, [selectedDate]);
 
   const handleNext = () => {
     setStep(step + 1);
@@ -26,6 +42,11 @@ const BookingWizard = ({ onClose }) => {
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
+    handleNext();
+  };
+
+  const handleSlotSelect = (slot) => {
+    setSelectedSlot(slot);
     handleNext();
   };
 
@@ -55,12 +76,25 @@ const BookingWizard = ({ onClose }) => {
       )}
       {step === 2 && (
         <div>
-          <h2>Choose a Date and Time</h2>
+          <h2>Choose a Date</h2>
           <Calendar onSelect={handleDateSelect} />
           <Button onClick={handlePrevious}>Previous</Button>
         </div>
       )}
       {step === 3 && (
+        <div>
+          <h2>Select a Time Slot</h2>
+          <ul>
+            {availableSlots.map((slot, index) => (
+              <li key={index}>
+                <Button onClick={() => handleSlotSelect(slot)}>{slot}</Button>
+              </li>
+            ))}
+          </ul>
+          <Button onClick={handlePrevious}>Previous</Button>
+        </div>
+      )}
+      {step === 4 && (
         <div>
           <h2>Contact Information</h2>
           <Input name="name" placeholder="Name" value={contactInfo.name} onChange={handleContactInfoChange} />
@@ -70,11 +104,12 @@ const BookingWizard = ({ onClose }) => {
           <Button onClick={handleNext}>Next</Button>
         </div>
       )}
-      {step === 4 && (
+      {step === 5 && (
         <div>
           <h2>Confirm Booking</h2>
           <p>Service: {selectedService?.description}</p>
           <p>Date: {selectedDate?.toString()}</p>
+          <p>Time Slot: {selectedSlot}</p>
           <p>Name: {contactInfo.name}</p>
           <p>Email: {contactInfo.email}</p>
           <p>Phone: {contactInfo.phone}</p>

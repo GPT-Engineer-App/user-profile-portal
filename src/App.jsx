@@ -6,6 +6,8 @@ import Profiles from "./pages/Profiles.jsx";
 import Categories from "./pages/Categories.jsx";
 import Category from "./pages/Category.jsx";
 import Navbar from "./components/Navbar.jsx";
+import Login from "./pages/Login.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function App() {
   return (
@@ -15,9 +17,10 @@ function App() {
         <Route exact path="/" element={<Index />} />
         <Route exact path="/about" element={<About />} />
         <Route exact path="/contact" element={<Contact />} />
-        <Route exact path="/profiles" element={<Profiles />} />
-        <Route exact path="/categories" element={<Categories />} />
-        <Route exact path="/categories/:category" element={<Category />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/profiles" element={<ProtectedRoute><Profiles /></ProtectedRoute>} />
+        <Route exact path="/categories" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
+        <Route exact path="/categories/:category" element={<ProtectedRoute><Category /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

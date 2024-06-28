@@ -21,7 +21,7 @@ export const sendEmail = async (to, subject, text) => {
     await sgMail.send(msg);
     console.log('Email sent');
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error sending email:', error.response ? error.response.body : error.message);
   }
 };
 
@@ -34,6 +34,6 @@ export const sendSMS = async (to, body) => {
     });
     console.log('SMS sent');
   } catch (error) {
-    console.error('Error sending SMS:', error);
+    console.error('Error sending SMS:', error.response ? error.response.body : error.message);
   }
 };

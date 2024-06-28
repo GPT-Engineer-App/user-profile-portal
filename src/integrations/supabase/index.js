@@ -3,13 +3,7 @@ import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_PROJECT_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_API_KEY;
-export const supabase = createClient(supabaseUrl, supabaseKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true,
-  },
-});
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 import React from "react";
 export const queryClient = new QueryClient();
@@ -47,8 +41,18 @@ const fromSupabase = async (query) => {
 | category   | text        | string | true     |
 | created_at | timestamptz | string | false    |
 
+### events
+
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| name       | text        | string | true     |
+| created_at | timestamptz | string | false    |
+| date       | date        | string | true     |
+
 */
 
+// Profiles hooks
 export const useProfiles = () => useQuery({
     queryKey: ['profiles'],
     queryFn: () => fromSupabase(supabase.from('profiles').select('*')),
@@ -89,6 +93,7 @@ export const useDeleteProfile = () => {
     });
 };
 
+// Services hooks
 export const useServices = () => useQuery({
     queryKey: ['services'],
     queryFn: () => fromSupabase(supabase.from('services').select('*')),
@@ -128,3 +133,45 @@ export const useDeleteService = () => {
         },
     });
 };
+
+// Events hooks
+export const useEvents = () => useQuery({
+    queryKey: ['events'],
+    queryFn: () => fromSupabase(supabase.from('events').select('*')),
+});
+
+export const useEvent = (id) => useQuery({
+    queryKey: ['events', id],
+    queryFn: () => fromSupabase(supabase.from('events').select('*').eq('id', id).single()),
+});
+
+export const useAddEvent = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newEvent) => fromSupabase(supabase.from('events').insert([newEvent])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('events');
+        },
+    });
+};
+
+export const useUpdateEvent = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedEvent) => fromSupabase(supabase.from('events').update(updatedEvent).eq('id', updatedEvent.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('events');
+        },
+    });
+};
+
+export const useDeleteEvent = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('events').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('events');
+        },
+    });
+};
+

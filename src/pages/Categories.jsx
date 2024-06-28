@@ -11,7 +11,9 @@ const Categories = () => {
     if (profiles && Array.isArray(profiles)) {
       const skillSet = new Set();
       profiles.forEach(profile => {
-        profile.skills.forEach(skill => skillSet.add(skill));
+        if (profile.skills) {
+          profile.skills.forEach(skill => skillSet.add(skill));
+        }
       });
       setCategories(Array.from(skillSet));
     }

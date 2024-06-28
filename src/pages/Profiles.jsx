@@ -92,7 +92,7 @@ const Profiles = () => {
           <h2 className="text-xl font-bold">{profile.name}</h2>
           <p>Portfolio: <a href={profile.portfolio} className="text-blue-500">{profile.portfolio}</a></p>
           <p>Contact: {profile.contact}</p>
-          <p>Skills: {profile.skills.join(", ")}</p>
+          <p>Skills: {profile.skills ? profile.skills.join(", ") : "No skills listed"}</p>
           {profile.id === session?.user?.id ? (
             <>
               <Button onClick={() => handleEdit(profile)}>Edit</Button>

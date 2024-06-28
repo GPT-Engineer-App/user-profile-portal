@@ -12,22 +12,22 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Index = () => {
   const [tasks, setTasks] = useState([
-    { id: 1, name: "Task review", time: "10:00 - 10:30" },
-    { id: 2, name: "Project meeting", time: "14:00 - 15:00" },
-    { id: 3, name: "Team", time: "16:30 - 17:45" },
-    { id: 4, name: "Deadline", time: "16:00 - 16:30" },
+    { id: 1, name: "Review project proposal", time: "10:00 - 10:30" },
+    { id: 2, name: "Team meeting", time: "14:00 - 15:00" },
+    { id: 3, name: "Client call", time: "16:30 - 17:45" },
+    { id: 4, name: "Submit report", time: "16:00 - 16:30" },
   ]);
 
   const [meetings, setMeetings] = useState([
-    { id: 1, name: "Budget", user: "Alice" },
+    { id: 1, name: "Budget review", user: "Alice" },
     { id: 2, name: "Project kick-off", user: "Mark" },
-    { id: 3, name: "Task", user: "Sarah" },
+    { id: 3, name: "Task delegation", user: "Sarah" },
   ]);
 
   const [messages, setMessages] = useState([
-    { id: 1, user: "Joh", time: "3:30 PM", message: "Let's finalize the project plan today." },
+    { id: 1, user: "John", time: "3:30 PM", message: "Let's finalize the project plan today." },
     { id: 2, user: "Alice", time: "3:45 PM", message: "I'm tied up with client calls. Can you handle it?" },
-    { id: 3, user: "Favi", time: "Today", message: "Help needed" },
+    { id: 3, user: "Favi", time: "Today", message: "Help needed with the new task." },
     { id: 4, user: "Proj", time: "Today", message: "Feedback needed on project content. Please review the file." },
     { id: 5, user: "Favi", time: "Today", message: "Let's schedule a call for further discussion." },
   ]);
@@ -36,7 +36,7 @@ const Index = () => {
     <div className="container mx-auto p-4">
       <nav className="bg-gray-800 p-4 mb-4">
         <div className="container mx-auto flex justify-between items-center">
-          <Link to="/" className="text-white text-lg font-bold">Notifications</Link>
+          <Link to="/" className="text-white text-lg font-bold">Dashboard</Link>
           <div className="space-x-4 flex items-center">
             <Link to="/about" className="text-gray-300 hover:text-white">About</Link>
             <Link to="/contact" className="text-gray-300 hover:text-white">Contact</Link>
@@ -77,8 +77,8 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <Avatar>
-                <AvatarImage src="/images/local-placeholder.png" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage src="/images/user-avatar.png" />
+                <AvatarFallback>JD</AvatarFallback>
               </Avatar>
               <p>Your tasks for today:</p>
               <ul>
@@ -207,8 +207,8 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <Avatar>
-                <AvatarImage src="/images/local-placeholder.png" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage src="/images/user-avatar.png" />
+                <AvatarFallback>JD</AvatarFallback>
               </Avatar>
               <p>Project Overview</p>
               <p>Currently online</p>
@@ -218,7 +218,7 @@ const Index = () => {
                 <Button variant="outline">Video</Button>
               </div>
               <p>Job Title: Project Consultant</p>
-              <p>Contact: contact@faving.com</p>
+              <p>Contact: john.doe@example.com</p>
               <p>Call: Not Available</p>
               <p>Timezone: Today at 11:58 AM</p>
             </CardContent>

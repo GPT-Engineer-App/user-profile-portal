@@ -3,13 +3,7 @@ import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_PROJECT_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_API_KEY;
-export const supabase = createClient(supabaseUrl, supabaseKey, {
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  },
-});
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 import React from "react";
 export const queryClient = new QueryClient();

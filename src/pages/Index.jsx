@@ -243,17 +243,7 @@ const Index = () => {
         </div>
       </div>
 
-      <Footer>
-        <div className="container mx-auto p-4">
-          <div className="flex justify-between items-center">
-            <p>&copy; 2023 Service Platform. All rights reserved.</p>
-            <div className="space-x-4">
-              <Link to="/privacy-policy" className="text-gray-300 hover:text-white">Privacy Policy</Link>
-              <Link to="/terms-of-service" className="text-gray-300 hover:text-white">Terms of Service</Link>
-            </div>
-          </div>
-        </div>
-      </Footer>
+      <Footer />
     </div>
   );
 };

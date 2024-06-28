@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { useServices } from '../integrations/supabase/index.js';
 import { sendEmail, sendSMS } from '../utils/notifications.js';
+import EventEmitter from 'events';
 
 const BookingWizard = ({ onClose }) => {
   const [step, setStep] = useState(1);
@@ -13,6 +14,7 @@ const BookingWizard = ({ onClose }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [contactInfo, setContactInfo] = useState({ name: '', email: '', phone: '' });
   const { data: services, error: servicesError } = useServices();
+  const eventEmitter = new EventEmitter();
 
   useEffect(() => {
     if (selectedDate) {
@@ -65,6 +67,15 @@ const BookingWizard = ({ onClose }) => {
 
       // Send SMS notification
       await sendSMS(contactInfo.phone, `Your booking for ${selectedService.description} on ${selectedDate.toString()} at ${selectedSlot} has been confirmed.`);
+      
+      // Emit booking confirmed event
+      eventEmitter.emit('bookingConfirmed', {
+        service: selectedService,
+        date: selectedDate,
+        slot: selectedSlot,
+        contactInfo
+      });
+
       onClose();
     } catch (error) {
       console.error('Error confirming booking:', error);

@@ -73,10 +73,10 @@ const Index = () => {
                     <Link to="/categories">All Categories</Link>
                   </NavigationMenuLink>
                   <NavigationMenuLink asChild>
-                    <Link to="/categories/web-development">Web Development</NavigationMenuLink>
+                    <Link to="/categories/web-development">Web Development</Link>
                   </NavigationMenuLink>
                   <NavigationMenuLink asChild>
-                    <Link to="/categories/graphic-design">Graphic Design</NavigationMenuLink>
+                    <Link to="/categories/graphic-design">Graphic Design</Link>
                   </NavigationMenuLink>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -86,7 +86,7 @@ const Index = () => {
         </div>
       </nav>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="col-span-1">
           <Card>
             <CardHeader>
@@ -100,7 +100,7 @@ const Index = () => {
               <p>Your tasks for today:</p>
               <ul>
                 {tasks.map(task => (
-                  <li key={task.id} className="flex justify-between items-center mb-2">
+                  <li key={task.id} className="flex justify-between items-center">
                     <span>{task.name}</span>
                     <span>{task.time}</span>
                     <Button variant="outline">Edit</Button>
@@ -131,7 +131,7 @@ const Index = () => {
             <CardContent>
               <ul>
                 {meetings.map(meeting => (
-                  <li key={meeting.id} className="flex justify-between items-center mb-2">
+                  <li key={meeting.id} className="flex justify-between items-center">
                     <span>{meeting.user} scheduled a {meeting.name}</span>
                     <Button variant="outline">Confirm</Button>
                   </li>

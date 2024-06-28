@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   const [profiles, setProfiles] = useState([
@@ -31,7 +32,9 @@ const Categories = () => {
       <h1 className="text-2xl font-bold mb-4">Service Categories</h1>
       <ul>
         {categories.map((category, index) => (
-          <li key={index} className="mb-2 p-2 border rounded">{category}</li>
+          <li key={index} className="mb-2 p-2 border rounded">
+            <Link to={`/categories/${category.toLowerCase().replace(/ /g, "-")}`}>{category}</Link>
+          </li>
         ))}
       </ul>
     </div>

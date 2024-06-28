@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -78,7 +77,7 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <Avatar>
-                <AvatarImage src="https://via.placeholder.com/150" />
+                <AvatarImage src="/images/local-placeholder.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <p>Your tasks for today:</p>
@@ -208,7 +207,7 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <Avatar>
-                <AvatarImage src="https://via.placeholder.com/150" />
+                <AvatarImage src="/images/local-placeholder.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <p>Project Overview</p>

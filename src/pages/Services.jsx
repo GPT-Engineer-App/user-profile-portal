@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Star } from 'lucide-react';
+import BookingWizard from '../components/BookingWizard.jsx';
 
 const Services = () => {
   const { data: services, isLoading, error } = useServices();
@@ -19,6 +20,7 @@ const Services = () => {
   const [editingServiceId, setEditingServiceId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
+  const [isBookingWizardOpen, setIsBookingWizardOpen] = useState(false);
 
   const addService = useAddService();
   const updateService = useUpdateService();
@@ -59,6 +61,14 @@ const Services = () => {
     }
   };
 
+  const handleOpenBookingWizard = () => {
+    setIsBookingWizardOpen(true);
+  };
+
+  const handleCloseBookingWizard = () => {
+    setIsBookingWizardOpen(false);
+  };
+
   const filteredServices = services?.filter(service => 
     service.description.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (filterCategory ? service.category === filterCategory : true)
@@ -82,6 +92,10 @@ const Services = () => {
         </div>
         <Button type="submit">{editingServiceId ? 'Update Service' : 'Add Service'}</Button>
       </form>
+      <Button onClick={handleOpenBookingWizard} className="mt-4">
+        Book a Service
+      </Button>
+      {isBookingWizardOpen && <BookingWizard onClose={handleCloseBookingWizard} />}
       <h2 className="text-xl font-bold mb-4">All Services</h2>
       <div className="flex space-x-4 mb-4">
         <Input 

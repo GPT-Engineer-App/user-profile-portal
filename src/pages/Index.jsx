@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
-import "@szhsin/react-menu/dist/index.css";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -9,6 +7,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, NavigationMenuViewport } from "@/components/ui/navigation-menu";
+import { Footer } from "@/components/ui/footer";
 
 const Index = () => {
   const [tasks, setTasks] = useState([
@@ -37,39 +37,56 @@ const Index = () => {
       <nav className="bg-gray-800 p-4 mb-4">
         <div className="container mx-auto flex justify-between items-center">
           <Link to="/" className="text-white text-lg font-bold">Dashboard</Link>
-          <div className="space-x-4 flex items-center">
-            <Link to="/about" className="text-gray-300 hover:text-white">About</Link>
-            <Link to="/contact" className="text-gray-300 hover:text-white">Contact</Link>
-            <Menu
-              menuButton={<MenuButton className="text-gray-300 hover:text-white">Profiles</MenuButton>}
-              transition
-            >
-              <MenuItem>
-                <Link to="/profiles" className="text-gray-800">All Profiles</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link to="/profiles/my-profile" className="text-gray-800">My Profile</Link>
-              </MenuItem>
-            </Menu>
-            <Menu
-              menuButton={<MenuButton className="text-gray-300 hover:text-white">Categories</MenuButton>}
-              transition
-            >
-              <MenuItem>
-                <Link to="/categories" className="text-gray-800">All Categories</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link to="/categories/web-development" className="text-gray-800">Web Development</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link to="/categories/graphic-design" className="text-gray-800">Graphic Design</Link>
-              </MenuItem>
-            </Menu>
-          </div>
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>About</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <NavigationMenuLink asChild>
+                    <Link to="/about">About</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Contact</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <NavigationMenuLink asChild>
+                    <Link to="/contact">Contact</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Profiles</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <NavigationMenuLink asChild>
+                    <Link to="/profiles">All Profiles</Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link to="/profiles/my-profile">My Profile</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <NavigationMenuLink asChild>
+                    <Link to="/categories">All Categories</Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link to="/categories/web-development">Web Development</NavigationMenuLink>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link to="/categories/graphic-design">Graphic Design</NavigationMenuLink>
+                  </NavigationMenuLink>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+            <NavigationMenuViewport />
+          </NavigationMenu>
         </div>
       </nav>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="col-span-1">
           <Card>
             <CardHeader>
@@ -83,7 +100,7 @@ const Index = () => {
               <p>Your tasks for today:</p>
               <ul>
                 {tasks.map(task => (
-                  <li key={task.id} className="flex justify-between items-center">
+                  <li key={task.id} className="flex justify-between items-center mb-2">
                     <span>{task.name}</span>
                     <span>{task.time}</span>
                     <Button variant="outline">Edit</Button>
@@ -114,7 +131,7 @@ const Index = () => {
             <CardContent>
               <ul>
                 {meetings.map(meeting => (
-                  <li key={meeting.id} className="flex justify-between items-center">
+                  <li key={meeting.id} className="flex justify-between items-center mb-2">
                     <span>{meeting.user} scheduled a {meeting.name}</span>
                     <Button variant="outline">Confirm</Button>
                   </li>
@@ -225,6 +242,18 @@ const Index = () => {
           </Card>
         </div>
       </div>
+
+      <Footer>
+        <div className="container mx-auto p-4">
+          <div className="flex justify-between items-center">
+            <p>&copy; 2023 Service Platform. All rights reserved.</p>
+            <div className="space-x-4">
+              <Link to="/privacy-policy" className="text-gray-300 hover:text-white">Privacy Policy</Link>
+              <Link to="/terms-of-service" className="text-gray-300 hover:text-white">Terms of Service</Link>
+            </div>
+          </div>
+        </div>
+      </Footer>
     </div>
   );
 };

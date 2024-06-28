@@ -65,6 +65,6 @@ export const SupabaseAuthUI = () => (
     supabaseClient={supabase}
     appearance={{ theme: ThemeSupa }}
     theme="default"
-    providers={[]}
+    providers={['google', 'facebook']}
   />
 );

@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
 const Profiles = () => {
   const { data: profiles, isLoading, error } = useProfiles();
@@ -13,6 +14,7 @@ const Profiles = () => {
   const [portfolio, setPortfolio] = useState('');
   const [contact, setContact] = useState('');
   const [skills, setSkills] = useState('');
+  const [editingProfileId, setEditingProfileId] = useState(null);
 
   const addProfile = useAddProfile();
   const updateProfile = useUpdateProfile();
@@ -21,10 +23,20 @@ const Profiles = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addProfile.mutateAsync({ name, portfolio, contact, skills: skills.split(',') });
-      toast.success('Profile added successfully');
+      if (editingProfileId) {
+        await updateProfile.mutateAsync({ id: editingProfileId, name, portfolio, contact, skills: skills.split(',') });
+        toast.success('Profile updated successfully');
+      } else {
+        await addProfile.mutateAsync({ name, portfolio, contact, skills: skills.split(',') });
+        toast.success('Profile added successfully');
+      }
+      setName('');
+      setPortfolio('');
+      setContact('');
+      setSkills('');
+      setEditingProfileId(null);
     } catch (error) {
-      toast.error('Failed to add profile');
+      toast.error('Failed to save profile');
     }
   };
 
@@ -33,6 +45,7 @@ const Profiles = () => {
     setPortfolio(profile.portfolio);
     setContact(profile.contact);
     setSkills(profile.skills.join(','));
+    setEditingProfileId(profile.id);
   };
 
   const handleDelete = async (id) => {
@@ -59,7 +72,7 @@ const Profiles = () => {
             </div>
             <div>
               <Label htmlFor="portfolio">Portfolio</Label>
-              <Input id="portfolio" value={portfolio} onChange={(e) => setPortfolio(e.target.value)} />
+              <Textarea id="portfolio" value={portfolio} onChange={(e) => setPortfolio(e.target.value)} />
             </div>
             <div>
               <Label htmlFor="contact">Contact</Label>
@@ -69,7 +82,7 @@ const Profiles = () => {
               <Label htmlFor="skills">Skills (comma separated)</Label>
               <Input id="skills" value={skills} onChange={(e) => setSkills(e.target.value)} />
             </div>
-            <Button type="submit">Update Profile</Button>
+            <Button type="submit">{editingProfileId ? 'Update Profile' : 'Add Profile'}</Button>
           </form>
         </div>
       )}

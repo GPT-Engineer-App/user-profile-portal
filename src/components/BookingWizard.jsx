@@ -12,7 +12,7 @@ const BookingWizard = ({ onClose }) => {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [contactInfo, setContactInfo] = useState({ name: '', email: '', phone: '' });
-  const { data: services } = useServices();
+  const { data: services, error: servicesError } = useServices();
 
   useEffect(() => {
     if (selectedDate) {
@@ -57,15 +57,24 @@ const BookingWizard = ({ onClose }) => {
   };
 
   const handleConfirm = async () => {
-    // Handle booking confirmation logic here
+    try {
+      // Handle booking confirmation logic here
 
-    // Send email notification
-    await sendEmail(contactInfo.email, 'Booking Confirmation', `Your booking for ${selectedService.description} on ${selectedDate.toString()} at ${selectedSlot} has been confirmed.`);
+      // Send email notification
+      await sendEmail(contactInfo.email, 'Booking Confirmation', `Your booking for ${selectedService.description} on ${selectedDate.toString()} at ${selectedSlot} has been confirmed.`);
 
-    // Send SMS notification
-    await sendSMS(contactInfo.phone, `Your booking for ${selectedService.description} on ${selectedDate.toString()} at ${selectedSlot} has been confirmed.`);
-    onClose();
+      // Send SMS notification
+      await sendSMS(contactInfo.phone, `Your booking for ${selectedService.description} on ${selectedDate.toString()} at ${selectedSlot} has been confirmed.`);
+      onClose();
+    } catch (error) {
+      console.error('Error confirming booking:', error);
+      alert('There was an error confirming your booking. Please try again.');
+    }
   };
+
+  if (servicesError) {
+    return <div>Error loading services: {servicesError.message}</div>;
+  }
 
   return (
     <div className="booking-wizard">

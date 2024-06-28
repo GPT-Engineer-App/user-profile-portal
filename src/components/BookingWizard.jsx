@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Calendar } from '@/components/ui/calendar';
 import { useServices } from '../integrations/supabase/index.js';
+import { sendEmail, sendSMS } from '../utils/notifications.js';
 
 const BookingWizard = ({ onClose }) => {
   const [step, setStep] = useState(1);
@@ -55,8 +56,14 @@ const BookingWizard = ({ onClose }) => {
     setContactInfo({ ...contactInfo, [name]: value });
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     // Handle booking confirmation logic here
+
+    // Send email notification
+    await sendEmail(contactInfo.email, 'Booking Confirmation', `Your booking for ${selectedService.description} on ${selectedDate.toString()} at ${selectedSlot} has been confirmed.`);
+
+    // Send SMS notification
+    await sendSMS(contactInfo.phone, `Your booking for ${selectedService.description} on ${selectedDate.toString()} at ${selectedSlot} has been confirmed.`);
     onClose();
   };
 

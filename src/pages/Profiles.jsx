@@ -44,7 +44,7 @@ const Profiles = () => {
     }
   };
 
-  const userProfile = profiles.find(profile => profile.id === session?.user?.id);
+  const userProfile = profiles?.find(profile => profile.id === session?.user?.id);
 
   return (
     <div className="container mx-auto p-4">
@@ -74,7 +74,7 @@ const Profiles = () => {
         </div>
       )}
       <h2 className="text-xl font-bold mb-4">All Profiles</h2>
-      {profiles.map((profile, index) => (
+      {profiles?.map((profile, index) => (
         <div key={index} className="mb-4 p-4 border rounded">
           <h2 className="text-xl font-bold">{profile.name}</h2>
           <p>Portfolio: <a href={profile.portfolio} className="text-blue-500">{profile.portfolio}</a></p>
